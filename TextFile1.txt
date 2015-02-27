@@ -1,0 +1,7 @@
+﻿TODO:
+
+1- maximize dorost neshoon bede
+2- overlay
+3- tint, white balance, 
+4- auto exposure disable 
+
