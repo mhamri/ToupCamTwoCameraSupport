@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToupTek;
 using System.Runtime.InteropServices;
+using toupcamTwoCameraSupport;
 
 namespace ToupcamTwoCameraSupport
 {
@@ -18,6 +19,9 @@ namespace ToupcamTwoCameraSupport
         private Bitmap bmp1_ = null;
         private Bitmap bmp2_ = null;
         private uint MSG_CAMEVENT = 0x8001; // WM_APP = 0x8000
+        private float image1Opacity;
+        private float image2Opacity;
+
 
         private void savefile(IntPtr pData, ref ToupCam.BITMAPINFOHEADER header)
         {
@@ -163,6 +167,17 @@ namespace ToupcamTwoCameraSupport
             tbTintCamera2.Enabled = false;
             cbAutoExposureCamera2.Enabled = false;
             cbResolutionCamera2.Enabled = false;
+            lOpacityImage1.Enabled = false;
+            lOpacityImage2.Enabled = false;
+
+#if DEBUG
+            pictureBox1.Image = toupcamTwoCameraSupport.Properties.Resources.pic1;
+            pictureBox2.Image = toupcamTwoCameraSupport.Properties.Resources.pic2;
+            lOpacityImage1.Enabled = true;
+            lOpacityImage2.Enabled = true;
+
+
+#endif
         }
 
         [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
@@ -198,7 +213,7 @@ namespace ToupcamTwoCameraSupport
 
         private void OnStart(object sender, EventArgs e)
         {
-            if (toupcam1_ != null || toupcam2_!=null)
+            if (toupcam1_ != null || toupcam2_ != null)
                 return;
 
             ToupCam.Instance[] arr = ToupCam.Enum();
@@ -211,12 +226,13 @@ namespace ToupcamTwoCameraSupport
                 if (arr.Length == 1) { toupcam1_ = new ToupCam(); }
                 if (arr.Length == 2) { toupcam2_ = new ToupCam(); }
 
-                if (!string.IsNullOrWhiteSpace(arr[0].id)) {
+                if (!string.IsNullOrWhiteSpace(arr[0].id))
+                {
                     if (!toupcam1_.Open(arr[0].id))
                     {
                         toupcam1_ = null;
                     }
-                
+
                 }
 
                 if (!string.IsNullOrWhiteSpace(arr[1].id))
@@ -227,8 +243,8 @@ namespace ToupcamTwoCameraSupport
                     }
 
                 }
-                
-                if (toupcam1_!=null)
+
+                if (toupcam1_ != null)
                 {
                     checkBox1.Enabled = true;
                     trackBar1.Enabled = true;
@@ -333,7 +349,7 @@ namespace ToupcamTwoCameraSupport
 
         private void InitSnapContextMenuAndExpoTimeRange()
         {
-            if (toupcam1_ == null || toupcam2_==null)
+            if (toupcam1_ == null || toupcam2_ == null)
                 return;
 
             uint nMin = 0, nMax = 0, nDef = 0;
@@ -350,7 +366,7 @@ namespace ToupcamTwoCameraSupport
 
             if (toupcam2_.StillResolutionNumber <= 0)
                 return;
-            
+
             button2.ContextMenuStrip = new ContextMenuStrip();
             button2.ContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(this.SnapClickedHandler);
 
@@ -600,6 +616,65 @@ namespace ToupcamTwoCameraSupport
             label3.Text = trackBar3.Value.ToString();
         }
 
-        
+
+        /// <summary>  
+        /// method for changing the opacity of an image  
+        /// </summary>  
+        /// <param name="image">image to set opacity on</param>  
+        /// <param name="opacity">percentage of opacity</param>  
+        /// <returns></returns>  
+        public Image SetImageOpacity(Image image, float opacity)
+        {
+            try
+            {
+                //create a Bitmap the size of the image provided  
+                Bitmap bmp = new Bitmap(image.Width, image.Height);
+
+                //create a graphics object from the image  
+                using (Graphics gfx = Graphics.FromImage(bmp))
+                {
+
+                    //create a color matrix object  
+                    ColorMatrix matrix = new ColorMatrix();
+
+                    //set the opacity  
+                    matrix.Matrix33 = opacity;
+
+                    //create image attributes  
+                    ImageAttributes attributes = new ImageAttributes();
+
+                    //set the color(opacity) of the image  
+                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+                    //now draw the image  
+                    gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                }
+                return bmp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbOpacityImage1_Scroll(object sender, EventArgs e)
+        {
+            image1Opacity = tbOpacityImage1.Value;
+            lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
+            pictureBox3.Image = ImageFilter.ChangeOpacity(pictureBox1.Image,image1Opacity/100);
+        }
+
+        private void tbOpacityImage2_Scroll(object sender, EventArgs e)
+        {
+            lOpacityImage2.Text = "Opacity - " + tbOpacityImage2.Value.ToString();
+
+        }
+
     }
 }

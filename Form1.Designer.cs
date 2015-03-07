@@ -51,6 +51,13 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbFrontImage1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.lOpacityImage1 = new System.Windows.Forms.Label();
+            this.tbOpacityImage1 = new System.Windows.Forms.TrackBar();
+            this.lOpacityImage2 = new System.Windows.Forms.Label();
+            this.tbOpacityImage2 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -60,6 +67,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpacityImage1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpacityImage2)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -285,16 +295,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.pictureBox3.Location = new System.Drawing.Point(332, 252);
+            this.pictureBox3.Location = new System.Drawing.Point(332, 292);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(615, 534);
+            this.pictureBox3.Size = new System.Drawing.Size(615, 494);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 14;
             this.pictureBox3.TabStop = false;
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.pictureBox2.Location = new System.Drawing.Point(661, 20);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -314,26 +325,112 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.rbFrontImage1);
+            this.panel1.Location = new System.Drawing.Point(332, 236);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(615, 48);
+            this.panel1.TabIndex = 24;
+            // 
+            // rbFrontImage1
+            // 
+            this.rbFrontImage1.AutoSize = true;
+            this.rbFrontImage1.Checked = true;
+            this.rbFrontImage1.Location = new System.Drawing.Point(40, 12);
+            this.rbFrontImage1.Name = "rbFrontImage1";
+            this.rbFrontImage1.Size = new System.Drawing.Size(188, 24);
+            this.rbFrontImage1.TabIndex = 0;
+            this.rbFrontImage1.TabStop = true;
+            this.rbFrontImage1.Text = "Make Camera 1 Front";
+            this.rbFrontImage1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(376, 12);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(188, 24);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Make Camera 2 Front";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // lOpacityImage1
+            // 
+            this.lOpacityImage1.Location = new System.Drawing.Point(21, 716);
+            this.lOpacityImage1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lOpacityImage1.Name = "lOpacityImage1";
+            this.lOpacityImage1.Size = new System.Drawing.Size(246, 20);
+            this.lOpacityImage1.TabIndex = 9;
+            this.lOpacityImage1.Text = "Opacity";
+            this.lOpacityImage1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // tbOpacityImage1
+            // 
+            this.tbOpacityImage1.Location = new System.Drawing.Point(18, 741);
+            this.tbOpacityImage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbOpacityImage1.Maximum = 100;
+            this.tbOpacityImage1.Name = "tbOpacityImage1";
+            this.tbOpacityImage1.Size = new System.Drawing.Size(249, 69);
+            this.tbOpacityImage1.TabIndex = 11;
+            this.tbOpacityImage1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbOpacityImage1.Value = 100;
+            this.tbOpacityImage1.Scroll += new System.EventHandler(this.tbOpacityImage1_Scroll);
+            // 
+            // lOpacityImage2
+            // 
+            this.lOpacityImage2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lOpacityImage2.Location = new System.Drawing.Point(981, 716);
+            this.lOpacityImage2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lOpacityImage2.Name = "lOpacityImage2";
+            this.lOpacityImage2.Size = new System.Drawing.Size(246, 20);
+            this.lOpacityImage2.TabIndex = 18;
+            this.lOpacityImage2.Text = "Opacity";
+            this.lOpacityImage2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // tbOpacityImage2
+            // 
+            this.tbOpacityImage2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbOpacityImage2.Location = new System.Drawing.Point(976, 741);
+            this.tbOpacityImage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbOpacityImage2.Maximum = 100;
+            this.tbOpacityImage2.Name = "tbOpacityImage2";
+            this.tbOpacityImage2.Size = new System.Drawing.Size(249, 69);
+            this.tbOpacityImage2.TabIndex = 17;
+            this.tbOpacityImage2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbOpacityImage2.Value = 100;
+            this.tbOpacityImage2.Scroll += new System.EventHandler(this.tbOpacityImage2_Scroll);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1240, 800);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnSnapCamera2);
             this.Controls.Add(this.cbAutoExposureCamera2);
             this.Controls.Add(this.cbResolutionCamera2);
             this.Controls.Add(this.tbTintCamera2);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.lOpacityImage2);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.tbOpacityImage2);
             this.Controls.Add(this.tbTempCamera2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.trackBar4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.trackBar3);
+            this.Controls.Add(this.tbOpacityImage1);
             this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.lOpacityImage1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.pictureBox1);
@@ -360,6 +457,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpacityImage1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbOpacityImage2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -390,6 +491,13 @@
         private System.Windows.Forms.ComboBox cbResolutionCamera2;
         private System.Windows.Forms.CheckBox cbAutoExposureCamera2;
         private System.Windows.Forms.Button btnSnapCamera2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rbFrontImage1;
+        private System.Windows.Forms.Label lOpacityImage1;
+        private System.Windows.Forms.TrackBar tbOpacityImage1;
+        private System.Windows.Forms.Label lOpacityImage2;
+        private System.Windows.Forms.TrackBar tbOpacityImage2;
     }
 }
 
