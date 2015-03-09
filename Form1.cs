@@ -21,8 +21,7 @@ namespace ToupcamTwoCameraSupport
         private uint MSG_CAMEVENT = 0x8001; // WM_APP = 0x8000
         private float image1Opacity;
         private float image2Opacity;
-        private Bitmap onTopImage = null;
-        private Bitmap onBackImage = null;
+        private bool imageOneOnTop = true;
 
 
         private void savefile(IntPtr pData, ref ToupCam.BITMAPINFOHEADER header)
@@ -119,6 +118,37 @@ namespace ToupcamTwoCameraSupport
 
                 pictureBox2.Image = bmp2_;
                 pictureBox2.Invalidate();
+            }
+
+            if (bmp1_ != null && bmp2_ != null)
+            {
+
+                Image topImage;
+                Image BottomImage;
+                float topImageOpacity;
+                float BottomImageOpacity;
+
+                if (imageOneOnTop)
+                {
+                    topImage = bmp1_;
+                    topImageOpacity = image1Opacity / 100;
+                    BottomImage = bmp2_;
+                    BottomImageOpacity = image2Opacity / 100;
+                }
+                else
+                {
+                    topImage = bmp2_;
+                    topImageOpacity = image2Opacity / 100;
+                    BottomImage = bmp1_;
+                    BottomImageOpacity = image1Opacity / 100;
+                }
+
+                Image transparentTopImage = ImageFilter.SetImageOpacity(topImage, topImageOpacity);
+                Image transparentBottomImage = ImageFilter.SetImageOpacity(BottomImage, BottomImageOpacity);
+
+                pictureBox3.Image = ImageFilter.CombineTwoPicture(transparentTopImage, transparentBottomImage);
+
+
             }
 
         }
@@ -619,46 +649,6 @@ namespace ToupcamTwoCameraSupport
         }
 
 
-        /// <summary>  
-        /// method for changing the opacity of an image  
-        /// </summary>  
-        /// <param name="image">image to set opacity on</param>  
-        /// <param name="opacity">percentage of opacity</param>  
-        /// <returns></returns>  
-        public Image SetImageOpacity(Image image, float opacity)
-        {
-            try
-            {
-                //create a Bitmap the size of the image provided  
-                Bitmap bmp = new Bitmap(image.Width, image.Height);
-
-                //create a graphics object from the image  
-                using (Graphics gfx = Graphics.FromImage(bmp))
-                {
-
-                    //create a color matrix object  
-                    ColorMatrix matrix = new ColorMatrix();
-
-                    //set the opacity  
-                    matrix.Matrix33 = opacity;
-
-                    //create image attributes  
-                    ImageAttributes attributes = new ImageAttributes();
-
-                    //set the color(opacity) of the image  
-                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-                    //now draw the image  
-                    gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
-                }
-                return bmp;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-        }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -667,8 +657,8 @@ namespace ToupcamTwoCameraSupport
 
         private void tbOpacityImage1_Scroll(object sender, EventArgs e)
         {
-            image1Opacity = (float)tbOpacityImage1.Value;
-            //lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
+            image1Opacity = tbOpacityImage1.Value;
+            lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
             ////pictureBox3.Image = ImageFilter.ChangeOpacity(pictureBox1.Image, image1Opacity);
             ////pictureBox2.Image = ImageFilter.ChangeOpacity(pictureBox2.Image, image1Opacity);
             //pictureBox3.Image = ImageFilter.combineAndChangeOpacity(pictureBox1.Image, pictureBox2.Image, image1Opacity);
@@ -676,20 +666,19 @@ namespace ToupcamTwoCameraSupport
 
         private void tbOpacityImage2_Scroll(object sender, EventArgs e)
         {
-            lOpacityImage2.Text = "Opacity - " + tbOpacityImage2.Value.ToString();
+            image2Opacity = tbOpacityImage2.Value;
+            lOpacityImage2.Text = "Opacity - " + image2Opacity.ToString();
 
         }
 
         private void rbFrontImage1_CheckedChanged(object sender, EventArgs e)
         {
-            onTopImage = bmp1_;
-            onBackImage = bmp2_;
+            imageOneOnTop = true;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            onTopImage = bmp2_;
-            onBackImage = bmp1_;
+            imageOneOnTop = false;
         }
 
     }
