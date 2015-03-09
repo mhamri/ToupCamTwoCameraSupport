@@ -21,6 +21,8 @@ namespace ToupcamTwoCameraSupport
         private uint MSG_CAMEVENT = 0x8001; // WM_APP = 0x8000
         private float image1Opacity;
         private float image2Opacity;
+        private Bitmap onTopImage = null;
+        private Bitmap onBackImage = null;
 
 
         private void savefile(IntPtr pData, ref ToupCam.BITMAPINFOHEADER header)
@@ -665,15 +667,29 @@ namespace ToupcamTwoCameraSupport
 
         private void tbOpacityImage1_Scroll(object sender, EventArgs e)
         {
-            image1Opacity = tbOpacityImage1.Value;
-            lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
-            pictureBox3.Image = ImageFilter.ChangeOpacity(pictureBox1.Image,image1Opacity/100);
+            image1Opacity = (float)tbOpacityImage1.Value;
+            //lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
+            ////pictureBox3.Image = ImageFilter.ChangeOpacity(pictureBox1.Image, image1Opacity);
+            ////pictureBox2.Image = ImageFilter.ChangeOpacity(pictureBox2.Image, image1Opacity);
+            //pictureBox3.Image = ImageFilter.combineAndChangeOpacity(pictureBox1.Image, pictureBox2.Image, image1Opacity);
         }
 
         private void tbOpacityImage2_Scroll(object sender, EventArgs e)
         {
             lOpacityImage2.Text = "Opacity - " + tbOpacityImage2.Value.ToString();
 
+        }
+
+        private void rbFrontImage1_CheckedChanged(object sender, EventArgs e)
+        {
+            onTopImage = bmp1_;
+            onBackImage = bmp2_;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            onTopImage = bmp2_;
+            onBackImage = bmp1_;
         }
 
     }

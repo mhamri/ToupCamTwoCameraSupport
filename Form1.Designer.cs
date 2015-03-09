@@ -52,8 +52,8 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbFrontImage1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbFrontImage1 = new System.Windows.Forms.RadioButton();
             this.lOpacityImage1 = new System.Windows.Forms.Label();
             this.tbOpacityImage1 = new System.Windows.Forms.TrackBar();
             this.lOpacityImage2 = new System.Windows.Forms.Label();
@@ -338,6 +338,18 @@
             this.panel1.Size = new System.Drawing.Size(615, 48);
             this.panel1.TabIndex = 24;
             // 
+            // radioButton2
+            // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(376, 12);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(188, 24);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Make Camera 2 Front";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
             // rbFrontImage1
             // 
             this.rbFrontImage1.AutoSize = true;
@@ -349,17 +361,7 @@
             this.rbFrontImage1.TabStop = true;
             this.rbFrontImage1.Text = "Make Camera 1 Front";
             this.rbFrontImage1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(376, 12);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(188, 24);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Make Camera 2 Front";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbFrontImage1.CheckedChanged += new System.EventHandler(this.rbFrontImage1_CheckedChanged);
             // 
             // lOpacityImage1
             // 

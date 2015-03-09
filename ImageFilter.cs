@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 
 
 namespace toupcamTwoCameraSupport
@@ -25,27 +26,37 @@ namespace toupcamTwoCameraSupport
         }
 
 
-        public static Bitmap ChangeOpacity2(Image image, byte opacityValue)
+        public static Image CombineTwoPicture(Image imageOne, Image imageTwo)
         {
-            Bitmap Original = new Bitmap(image);
-            Bitmap transparentImage = new Bitmap(image.Width, image.Height);
 
-            Color c = Color.Black;
-            Color v = Color.Black;
+            Bitmap first = new Bitmap(imageOne);
+            Bitmap second = new Bitmap(imageTwo);
+            //Bitmap result = new Bitmap(first.Width, first.Height);
+            //fix :
+            Bitmap result = new Bitmap(Math.Max(first.Width, second.Width), Math.Max(first.Height, second.Height));
+            //Console.WriteLine(first.Width);
+            Graphics g = Graphics.FromImage(result);
+            g.DrawImageUnscaled(first, 0, 0);
+            g.DrawImageUnscaled(second, 0, 0);
+            return result;
 
-            for (int i = 0; i < image.Width; i++)
-            {
-                for (int j = 0; j < image.Height; j++)
-                {
-                    c = Original.GetPixel(i, j);
-                    v = Color.FromArgb(opacityValue, c.R, c.G, c.B);
-                    transparentImage.SetPixel(i, j, v);
-
-                }
-            }
-
-            return transparentImage;
         }
+        /// <summary>
+        /// combine two not transparent image together, but all the time change opacity of second image
+        /// my assumption is imageTwo all the time is on the top picture
+        /// </summary>
+        /// <param name="imageOne">bxack ground</param>
+        /// <param name="imageTwo">on the top picture that need to change opacity</param>
+        /// <param name="opacity">the opacity value, a value between 0-1</param>
+        /// <returns></returns>
+        public static Image combineAndChangeOpacity(Image imageOne, Image imageTwo, float opacity)
+        {
+            imageTwo = ChangeOpacity(imageTwo, opacity);
+
+            return CombineTwoPicture(imageOne, imageTwo);
+        }
+
+
 
 
 
