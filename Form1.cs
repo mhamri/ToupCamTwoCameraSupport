@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ToupTek;
 using System.Runtime.InteropServices;
 using toupcamTwoCameraSupport;
+using System.Threading;
 
 namespace ToupcamTwoCameraSupport
 {
@@ -22,6 +23,10 @@ namespace ToupcamTwoCameraSupport
         private float image1Opacity;
         private float image2Opacity;
         private bool imageOneOnTop = true;
+
+        private ImageFilter _imageFilter;
+        private Thread _thread;
+
 
 
         private void savefile(IntPtr pData, ref ToupCam.BITMAPINFOHEADER header)
@@ -130,23 +135,39 @@ namespace ToupcamTwoCameraSupport
 
                 if (imageOneOnTop)
                 {
-                    topImage = bmp1_;
+                    topImage = (Image)bmp1_.Clone();
                     topImageOpacity = image1Opacity / 100;
-                    BottomImage = bmp2_;
+                    BottomImage = (Image)bmp2_.Clone();
                     BottomImageOpacity = image2Opacity / 100;
                 }
                 else
                 {
-                    topImage = bmp2_;
+                    topImage = (Image)bmp2_.Clone();
                     topImageOpacity = image2Opacity / 100;
-                    BottomImage = bmp1_;
+                    BottomImage = (Image)bmp1_.Clone();
                     BottomImageOpacity = image1Opacity / 100;
                 }
 
-                Image transparentTopImage = ImageFilter.SetImageOpacity(topImage, topImageOpacity);
-                Image transparentBottomImage = ImageFilter.SetImageOpacity(BottomImage, BottomImageOpacity);
 
-                pictureBox3.Image = ImageFilter.CombineTwoPicture(transparentTopImage, transparentBottomImage);
+                if (_imageFilter.Result != null)
+                {
+                    pictureBox3.Image = _imageFilter.Result;
+                }
+
+                if (!_thread.IsAlive)
+                {
+                    _imageFilter.FirstImage = topImage;
+                    _imageFilter.FirstImageOpacity = topImageOpacity;
+                    _imageFilter.SecondImage = BottomImage;
+                    _imageFilter.SecondImageOpacity = BottomImageOpacity;
+
+                    _thread = new Thread(_imageFilter.StartCombinationThread);
+                    _thread.Name = "comboThread";
+                    _thread.IsBackground = true;
+
+                    _thread.Start();
+
+                }
 
 
             }
@@ -182,6 +203,7 @@ namespace ToupcamTwoCameraSupport
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -201,6 +223,17 @@ namespace ToupcamTwoCameraSupport
             cbResolutionCamera2.Enabled = false;
             lOpacityImage1.Enabled = false;
             lOpacityImage2.Enabled = false;
+            _imageFilter = new ImageFilter();
+
+            image1Opacity = 100;
+            image2Opacity = 100;
+
+            _thread = new Thread(_imageFilter.StartCombinationThread);
+            _thread.Name = "comboThread";
+            _thread.IsBackground = true;
+
+            pictureBox3.BackColor = Color.White;
+
 
 #if DEBUG
             pictureBox1.Image = toupcamTwoCameraSupport.Properties.Resources.pic1;
@@ -255,7 +288,7 @@ namespace ToupcamTwoCameraSupport
             }
             else
             {
-                if (arr.Length == 1) { toupcam1_ = new ToupCam(); }
+                if (arr.Length >= 1) { toupcam1_ = new ToupCam(); }
                 if (arr.Length == 2) { toupcam2_ = new ToupCam(); }
 
                 if (!string.IsNullOrWhiteSpace(arr[0].id))

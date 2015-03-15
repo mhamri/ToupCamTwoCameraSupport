@@ -13,7 +13,27 @@ namespace toupcamTwoCameraSupport
     class ImageFilter
     {
 
-        public static Bitmap ChangeOpacity(Image img, float opacityvalue)
+        public volatile Image FirstImage = null;
+        public volatile Image SecondImage = null;
+        public volatile Image Result = null;
+
+        public volatile float FirstImageOpacity = 1.0f;
+        public volatile float SecondImageOpacity = 1.0f;
+
+        private volatile Image _FirstImageAfterOpacity = null;
+        private volatile Image _SecondImageAfterOpacity = null;
+
+
+
+        public void StartCombinationThread()
+        {
+            _FirstImageAfterOpacity = SetImageOpacity(FirstImage, FirstImageOpacity);
+            _SecondImageAfterOpacity = SetImageOpacity(SecondImage, SecondImageOpacity);
+            Result = CombineTwoPicture(_FirstImageAfterOpacity, _SecondImageAfterOpacity);
+        }
+
+
+        public Bitmap ChangeOpacity(Image img, float opacityvalue)
         {
             Bitmap bmp = new Bitmap(img.Width, img.Height); // Determining Width and Height of Source Image
             Graphics graphics = Graphics.FromImage(bmp);
@@ -32,7 +52,7 @@ namespace toupcamTwoCameraSupport
         /// <param name="image">image to set opacity on</param>  
         /// <param name="opacity">percentage of opacity</param>  
         /// <returns></returns>  
-        public static Image SetImageOpacity(Image image, float opacity)
+        public Image SetImageOpacity(Image image, float opacity)
         {
             try
             {
@@ -69,7 +89,7 @@ namespace toupcamTwoCameraSupport
 
 
 
-        public static Image CombineTwoPicture(Image imageOne, Image imageTwo)
+        public Image CombineTwoPicture(Image imageOne, Image imageTwo)
         {
 
             Bitmap first = new Bitmap(imageOne);
@@ -84,21 +104,6 @@ namespace toupcamTwoCameraSupport
             return result;
 
         }
-        /// <summary>
-        /// combine two not transparent image together, but all the time change opacity of second image
-        /// my assumption is imageTwo all the time is on the top picture
-        /// </summary>
-        /// <param name="imageOne">bxack ground</param>
-        /// <param name="imageTwo">on the top picture that need to change opacity</param>
-        /// <param name="opacity">the opacity value, a value between 0-1</param>
-        /// <returns></returns>
-        public static Image combineAndChangeOpacity(Image imageOne, Image imageTwo, float opacity)
-        {
-            imageTwo = ChangeOpacity(imageTwo, opacity);
-
-            return CombineTwoPicture(imageOne, imageTwo);
-        }
-
 
 
 
