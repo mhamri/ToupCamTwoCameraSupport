@@ -58,6 +58,7 @@
             this.tbOpacityImage1 = new System.Windows.Forms.TrackBar();
             this.lOpacityImage2 = new System.Windows.Forms.Label();
             this.tbOpacityImage2 = new System.Windows.Forms.TrackBar();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -90,7 +91,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(249, 38);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Snap";
+            this.button2.Text = "Snap Camera 1";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.OnSnap);
             // 
@@ -285,7 +286,7 @@
             this.btnSnapCamera2.Name = "btnSnapCamera2";
             this.btnSnapCamera2.Size = new System.Drawing.Size(249, 38);
             this.btnSnapCamera2.TabIndex = 23;
-            this.btnSnapCamera2.Text = "Snap";
+            this.btnSnapCamera2.Text = "Snap Camera 2";
             this.btnSnapCamera2.UseVisualStyleBackColor = true;
             this.btnSnapCamera2.Click += new System.EventHandler(this.onSnap2);
             // 
@@ -342,11 +343,11 @@
             // 
             this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(376, 12);
+            this.radioButton2.Location = new System.Drawing.Point(405, 12);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(188, 24);
+            this.radioButton2.Size = new System.Drawing.Size(159, 24);
             this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Make Camera 2 Front";
+            this.radioButton2.Text = "Camera 2 On Top";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
@@ -356,10 +357,10 @@
             this.rbFrontImage1.Checked = true;
             this.rbFrontImage1.Location = new System.Drawing.Point(40, 12);
             this.rbFrontImage1.Name = "rbFrontImage1";
-            this.rbFrontImage1.Size = new System.Drawing.Size(188, 24);
+            this.rbFrontImage1.Size = new System.Drawing.Size(159, 24);
             this.rbFrontImage1.TabIndex = 0;
             this.rbFrontImage1.TabStop = true;
-            this.rbFrontImage1.Text = "Make Camera 1 Front";
+            this.rbFrontImage1.Text = "Camera 1 On Top";
             this.rbFrontImage1.UseVisualStyleBackColor = true;
             this.rbFrontImage1.CheckedChanged += new System.EventHandler(this.rbFrontImage1_CheckedChanged);
             // 
@@ -409,12 +410,25 @@
             this.tbOpacityImage2.Value = 100;
             this.tbOpacityImage2.Scroll += new System.EventHandler(this.tbOpacityImage2_Scroll);
             // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.Location = new System.Drawing.Point(978, 20);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(249, 38);
+            this.button4.TabIndex = 23;
+            this.button4.Text = "Snap Combo";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.onSnap3);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1240, 800);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.btnSnapCamera2);
             this.Controls.Add(this.cbAutoExposureCamera2);
             this.Controls.Add(this.cbResolutionCamera2);
@@ -500,6 +514,7 @@
         private System.Windows.Forms.TrackBar tbOpacityImage1;
         private System.Windows.Forms.Label lOpacityImage2;
         private System.Windows.Forms.TrackBar tbOpacityImage2;
+        private System.Windows.Forms.Button button4;
     }
 }
 

@@ -133,7 +133,7 @@ namespace ToupcamTwoCameraSupport
                 float topImageOpacity;
                 float BottomImageOpacity;
 
-                if (imageOneOnTop)
+                if (!imageOneOnTop)
                 {
                     topImage = (Image)bmp1_.Clone();
                     topImageOpacity = image1Opacity / 100;
@@ -222,7 +222,9 @@ namespace ToupcamTwoCameraSupport
             cbAutoExposureCamera2.Enabled = false;
             cbResolutionCamera2.Enabled = false;
             lOpacityImage1.Enabled = false;
+            tbOpacityImage1.Enabled = false;
             lOpacityImage2.Enabled = false;
+            tbOpacityImage2.Enabled = false;
             _imageFilter = new ImageFilter();
 
             image1Opacity = 100;
@@ -238,8 +240,7 @@ namespace ToupcamTwoCameraSupport
 #if DEBUG
             pictureBox1.Image = toupcamTwoCameraSupport.Properties.Resources.pic1;
             pictureBox2.Image = toupcamTwoCameraSupport.Properties.Resources.pic2;
-            lOpacityImage1.Enabled = true;
-            lOpacityImage2.Enabled = true;
+
 
 
 #endif
@@ -318,6 +319,9 @@ namespace ToupcamTwoCameraSupport
                     comboBox1.Enabled = true;
                     button2.Enabled = true;
                     button3.Enabled = true;
+                    tbOpacityImage1.Enabled = true;
+                    lOpacityImage1.Enabled = true;
+                    lOpacityImage1.Text = "Opacity - 100%";
                     button2.ContextMenuStrip = null;
                     InitSnapContextMenuAndExpoTimeRange();
 
@@ -363,6 +367,9 @@ namespace ToupcamTwoCameraSupport
                     button3.Enabled = true;
                     tbTempCamera2.Enabled = true;
                     tbTintCamera2.Enabled = true;
+                    tbOpacityImage2.Enabled = true;
+                    lOpacityImage2.Enabled = true;
+                    lOpacityImage2.Text = "Opacity - 100%";
                     button2.ContextMenuStrip = null;
                     InitSnapContextMenuAndExpoTimeRange();
 
@@ -504,7 +511,7 @@ namespace ToupcamTwoCameraSupport
                 {
                     if (bmp1_ != null)
                     {
-                        bmp1_.Save("ToupcamTwoCameraSupport.jpg");
+                        bmp1_.Save("Camera1.jpg");
                     }
                 }
                 else
@@ -523,7 +530,7 @@ namespace ToupcamTwoCameraSupport
                 {
                     if (bmp2_ != null)
                     {
-                        bmp2_.Save("toupcamdemowinformcs2.jpg");
+                        bmp2_.Save("Camera2.jpg");
                     }
                 }
                 else
@@ -531,6 +538,15 @@ namespace ToupcamTwoCameraSupport
                     if (btnSnapCamera2.ContextMenuStrip != null)
                         btnSnapCamera2.ContextMenuStrip.Show(Cursor.Position);
                 }
+            }
+        }
+
+        private void onSnap3(object sender, EventArgs e)
+        {
+            if (_imageFilter.Result != null)
+            {
+                Bitmap resultBmp = (Bitmap)_imageFilter.Result;
+                resultBmp.Save("Combo.jpg");
             }
         }
 
@@ -691,7 +707,7 @@ namespace ToupcamTwoCameraSupport
         private void tbOpacityImage1_Scroll(object sender, EventArgs e)
         {
             image1Opacity = tbOpacityImage1.Value;
-            lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString();
+            lOpacityImage1.Text = "Opacity - " + image1Opacity.ToString() + "%";
             ////pictureBox3.Image = ImageFilter.ChangeOpacity(pictureBox1.Image, image1Opacity);
             ////pictureBox2.Image = ImageFilter.ChangeOpacity(pictureBox2.Image, image1Opacity);
             //pictureBox3.Image = ImageFilter.combineAndChangeOpacity(pictureBox1.Image, pictureBox2.Image, image1Opacity);
@@ -700,7 +716,7 @@ namespace ToupcamTwoCameraSupport
         private void tbOpacityImage2_Scroll(object sender, EventArgs e)
         {
             image2Opacity = tbOpacityImage2.Value;
-            lOpacityImage2.Text = "Opacity - " + image2Opacity.ToString();
+            lOpacityImage2.Text = "Opacity - " + image2Opacity.ToString() + "%";
 
         }
 
