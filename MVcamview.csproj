@@ -8,8 +8,8 @@
     <ProjectGuid>{AA5B2412-0B75-46F3-AD5E-6C06D6707FBC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>toupcamTwoCameraSupport</RootNamespace>
-    <AssemblyName>toupcamTwoCameraSupport</AssemblyName>
+    <RootNamespace>MVcamview</RootNamespace>
+    <AssemblyName>MVcamview</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

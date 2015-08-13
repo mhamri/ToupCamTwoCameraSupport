@@ -8,10 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using ToupTek;
 using System.Runtime.InteropServices;
-using toupcamTwoCameraSupport;
+using MVcamview;
 using System.Threading;
 
-namespace ToupcamTwoCameraSupport
+namespace MVcamview
 {
     public partial class Form1 : Form
     {
@@ -238,8 +238,8 @@ namespace ToupcamTwoCameraSupport
 
 
 #if DEBUG
-            pictureBox1.Image = toupcamTwoCameraSupport.Properties.Resources.pic1;
-            pictureBox2.Image = toupcamTwoCameraSupport.Properties.Resources.pic2;
+            pictureBox1.Image = MVcamview.Properties.Resources.pic1;
+            pictureBox2.Image = MVcamview.Properties.Resources.pic2;
 
 
 
@@ -729,6 +729,5 @@ namespace ToupcamTwoCameraSupport
         {
             imageOneOnTop = false;
         }
-
     }
 }
