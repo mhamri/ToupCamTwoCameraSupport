@@ -26,6 +26,7 @@ namespace MVcamview
 
         private ImageFilter _imageFilter;
         private Thread _thread;
+        private bool IsRunning = false;
 
 
 
@@ -125,54 +126,59 @@ namespace MVcamview
                 pictureBox2.Invalidate();
             }
 
-            if (bmp1_ != null && bmp2_ != null)
+
+
+            if (!IsRunning)
             {
-
-                Image topImage;
-                Image BottomImage;
-                float topImageOpacity;
-                float BottomImageOpacity;
-
-                if (!imageOneOnTop)
-                {
-                    topImage = (Image)bmp1_.Clone();
-                    topImageOpacity = image1Opacity / 100;
-                    BottomImage = (Image)bmp2_.Clone();
-                    BottomImageOpacity = image2Opacity / 100;
-                }
-                else
-                {
-                    topImage = (Image)bmp2_.Clone();
-                    topImageOpacity = image2Opacity / 100;
-                    BottomImage = (Image)bmp1_.Clone();
-                    BottomImageOpacity = image1Opacity / 100;
-                }
-
-
-                if (_imageFilter.Result != null)
-                {
-                    pictureBox3.Image = _imageFilter.Result;
-                }
-
-                if (!_thread.IsAlive)
-                {
-                    _imageFilter.FirstImage = topImage;
-                    _imageFilter.FirstImageOpacity = topImageOpacity;
-                    _imageFilter.SecondImage = BottomImage;
-                    _imageFilter.SecondImageOpacity = BottomImageOpacity;
-
-                    _thread = new Thread(_imageFilter.StartCombinationThread);
-                    _thread.Name = "comboThread";
-                    _thread.IsBackground = true;
-
-                    _thread.Start();
-
-                }
-
-
+                BackgroundWorker bg = new BackgroundWorker();
+                bg.DoWork += new DoWorkEventHandler(Bg_ChangeOpcity);
+                bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Bg_ChangeOpacityFinished);
+                IsRunning = true;
+                bg.RunWorkerAsync();
             }
 
         }
+
+        private void Bg_ChangeOpacityFinished(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pictureBox3.Image = _imageFilter.Result;
+
+            //draw lines
+            IsRunning = false;
+        }
+
+        private void Bg_ChangeOpcity(object sender, DoWorkEventArgs e)
+        {
+            if (bmp1_ == null || bmp2_ == null) return;
+
+            Image topImage;
+            Image bottomImage;
+            float topImageOpacity;
+            float bottomImageOpacity;
+
+            if (!imageOneOnTop)
+            {
+                topImage = (Image)bmp1_.Clone();
+                topImageOpacity = image1Opacity / 100;
+                bottomImage = (Image)bmp2_.Clone();
+                bottomImageOpacity = image2Opacity / 100;
+            }
+            else
+            {
+                topImage = (Image)bmp2_.Clone();
+                topImageOpacity = image2Opacity / 100;
+                bottomImage = (Image)bmp1_.Clone();
+                bottomImageOpacity = image1Opacity / 100;
+            }
+
+            _imageFilter.FirstImage = topImage;
+            _imageFilter.FirstImageOpacity = topImageOpacity;
+            _imageFilter.SecondImage = bottomImage;
+            _imageFilter.SecondImageOpacity = bottomImageOpacity;
+
+            _imageFilter.StartToCombine();
+        }
+
 
         private void OnEventStillImage()
         {
@@ -230,7 +236,7 @@ namespace MVcamview
             image1Opacity = 100;
             image2Opacity = 100;
 
-            _thread = new Thread(_imageFilter.StartCombinationThread);
+            _thread = new Thread(_imageFilter.StartToCombine);
             _thread.Name = "comboThread";
             _thread.IsBackground = true;
 

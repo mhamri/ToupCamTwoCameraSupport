@@ -522,33 +522,27 @@ namespace ToupTek
         private static void ExposureCallback(IntPtr pCallbackCtx)
         {
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
-            if (gch != null)
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                if (pthis != null)
-                    pthis.ExposureCallback();
+                pthis?.ExposureCallback();
             }
         }
 
         private static void TempTintCallback(int nTemp, int nTint, IntPtr pCallbackCtx)
         {
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
-            if (gch != null)
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                if (pthis != null)
-                    pthis.TempTintCallback(nTemp, nTint);
+                pthis?.TempTintCallback(nTemp, nTint);
             }
         }
 
         private static void ChromeCallback(IntPtr pCallbackCtx)
         {
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
-            if (gch != null)
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                if (pthis != null)
-                    pthis.ChromeCallback();
+                pthis?.ChromeCallback();
             }
         }
 
@@ -621,7 +615,7 @@ namespace ToupTek
             Instance[] arr = new Instance[cnt];
             if (cnt != 0)
             {
-                Int64 p = ti.ToInt64();
+                long p = ti.ToInt64();
                 for (uint i = 0; i < cnt; ++i)
                 {
                     arr[i].displayname = Marshal.PtrToStringUni((IntPtr)p);
@@ -633,7 +627,7 @@ namespace ToupTek
                     p += IntPtr.Size;
 
                     {
-                        Int64 q = pm.ToInt64();
+                        long q = pm.ToInt64();
                         IntPtr pmn = Marshal.ReadIntPtr((IntPtr)q);
                         arr[i].model.name = Marshal.PtrToStringUni(pmn);
                         q += IntPtr.Size;
