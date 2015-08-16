@@ -69,6 +69,7 @@ namespace MVcamview
             }
             MessageBox.Show(@"Error");
             //TODO:make it retry
+            ResetUI();
             OnStart(null, null);
         }
 
