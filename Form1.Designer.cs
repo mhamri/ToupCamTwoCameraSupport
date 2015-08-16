@@ -638,6 +638,7 @@
             this.LeftLineValue.Name = "LeftLineValue";
             this.LeftLineValue.Size = new System.Drawing.Size(60, 20);
             this.LeftLineValue.TabIndex = 1;
+            this.LeftLineValue.ValueChanged += new System.EventHandler(this.ckbLeftLine_CheckedChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -657,6 +658,7 @@
             this.RightLineValue.Name = "RightLineValue";
             this.RightLineValue.Size = new System.Drawing.Size(60, 20);
             this.RightLineValue.TabIndex = 28;
+            this.RightLineValue.ValueChanged += new System.EventHandler(this.cbRightLIne_CheckedChanged);
             // 
             // ExpoValue1
             // 

@@ -860,13 +860,13 @@ namespace MVcamview
 
         private void cbRightLIne_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox)sender;
+            CheckBox cb = ShowRightLine;
             if (cb.Checked)
             {
                 int rightLineCalculated = 0;
                 if (pictureBox3 != null)
                 {
-                    rightLineCalculated = pictureBox3.Height - int.Parse(RightLineValue.Text ?? "" + -1);
+                    rightLineCalculated = pictureBox3.Height - (int) RightLineValue.Value + _imageFilter.Thickness;
                 }
 
                 _imageFilter.RightLine = rightLineCalculated;
@@ -879,10 +879,10 @@ namespace MVcamview
 
         private void ckbLeftLine_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox)sender;
+            CheckBox cb = ShowLeftLine;
             if (cb.Checked)
             {
-                int leftLineCalculated = int.Parse(LeftLineValue.Text ?? "" + 0);
+                int leftLineCalculated = (int) LeftLineValue.Value;
 
                 _imageFilter.LeftLine = leftLineCalculated;
             }

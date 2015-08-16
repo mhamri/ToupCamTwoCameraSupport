@@ -21,7 +21,7 @@ namespace MVcamview
         public int RightLine = -1;
         public int LeftLine = -1;
         public Color LineColor = Color.Red;
-        public int Thickness=1;
+        public int Thickness=5;
 
         public void StartToCombine()
         {
