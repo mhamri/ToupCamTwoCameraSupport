@@ -90,8 +90,8 @@ namespace MVcamview
             uint nTime = 0;
             if (toupcam1_.get_ExpoTime(out nTime))
             {
-                ExpoValue1.Value = (int) nTime;
-                label1.Text = (nTime/1000) + " ms";
+                ExpoValue1.Value = (int)nTime;
+                label1.Text = (nTime / 1000) + " ms";
             }
         }
 
@@ -101,8 +101,8 @@ namespace MVcamview
             uint nTime = 0;
             if (toupcam2_.get_ExpoTime(out nTime))
             {
-                ExpoValue2.Value = (int) nTime;
-                label4.Text = (nTime/1000) + " ms";
+                ExpoValue2.Value = (int)nTime;
+                label4.Text = (nTime / 1000) + " ms";
             }
         }
 
@@ -183,17 +183,17 @@ namespace MVcamview
 
             if (!imageOneOnTop)
             {
-                topImage = (Image) bmp1_.Clone();
-                topImageOpacity = image1Opacity/100;
-                bottomImage = (Image) bmp2_.Clone();
-                bottomImageOpacity = image2Opacity/100;
+                topImage = (Image)bmp1_.Clone();
+                topImageOpacity = image1Opacity / 100;
+                bottomImage = (Image)bmp2_.Clone();
+                bottomImageOpacity = image2Opacity / 100;
             }
             else
             {
-                topImage = (Image) bmp2_.Clone();
-                topImageOpacity = image2Opacity/100;
-                bottomImage = (Image) bmp1_.Clone();
-                bottomImageOpacity = image1Opacity/100;
+                topImage = (Image)bmp2_.Clone();
+                topImageOpacity = image2Opacity / 100;
+                bottomImage = (Image)bmp1_.Clone();
+                bottomImageOpacity = image1Opacity / 100;
             }
 
             _imageFilter.FirstImage = topImage;
@@ -209,7 +209,7 @@ namespace MVcamview
             uint nWidth = 0, nHeight = 0;
             if (toupcam1_.PullStillImage(IntPtr.Zero, 24, out nWidth, out nHeight)) /* peek the width and height */
             {
-                Bitmap sbmp = new Bitmap((int) nWidth, (int) nHeight, PixelFormat.Format24bppRgb);
+                Bitmap sbmp = new Bitmap((int)nWidth, (int)nHeight, PixelFormat.Format24bppRgb);
 
                 BitmapData bmpdata = sbmp.LockBits(new Rectangle(0, 0, sbmp.Width, sbmp.Height), ImageLockMode.WriteOnly,
                     sbmp.PixelFormat);
@@ -221,7 +221,7 @@ namespace MVcamview
 
             if (toupcam2_.PullStillImage(IntPtr.Zero, 24, out nWidth, out nHeight)) /* peek the width and height */
             {
-                Bitmap sbmp = new Bitmap((int) nWidth, (int) nHeight, PixelFormat.Format24bppRgb);
+                Bitmap sbmp = new Bitmap((int)nWidth, (int)nHeight, PixelFormat.Format24bppRgb);
 
                 BitmapData bmpdata = sbmp.LockBits(new Rectangle(0, 0, sbmp.Width, sbmp.Height), ImageLockMode.WriteOnly,
                     sbmp.PixelFormat);
@@ -283,7 +283,7 @@ namespace MVcamview
         {
             if (MSG_CAMEVENT == m.Msg)
             {
-                switch ((ToupCam.eEVENT) m.WParam.ToInt32())
+                switch ((ToupCam.eEVENT)m.WParam.ToInt32())
                 {
                     case ToupCam.eEVENT.EVENT_ERROR:
                         OnEventError();
@@ -387,7 +387,7 @@ namespace MVcamview
                             if (toupcam1_.get_Resolution(i, out w, out h))
                                 ResoulationList1.Items.Add(w + "*" + h);
                         }
-                        ResoulationList1.SelectedIndex = (int) eSize;
+                        ResoulationList1.SelectedIndex = (int)eSize;
 
                         int width = 0, height = 0;
                         if (toupcam1_.get_Size(out width, out height))
@@ -446,7 +446,7 @@ namespace MVcamview
                             if (toupcam2_.get_Resolution(i, out w, out h))
                                 ResoulationList2.Items.Add(w + "*" + h);
                         }
-                        ResoulationList2.SelectedIndex = (int) eSize;
+                        ResoulationList2.SelectedIndex = (int)eSize;
 
                         int width = 0, height = 0;
                         if (toupcam2_.get_Size(out width, out height))
@@ -479,7 +479,7 @@ namespace MVcamview
             int k = CaptureCamera1.ContextMenuStrip.Items.IndexOf(e.ClickedItem);
             if (k >= 0)
             {
-                toupcam1_.Snap((uint) k);
+                toupcam1_.Snap((uint)k);
             }
         }
 
@@ -488,7 +488,7 @@ namespace MVcamview
             int k = CaptureCamera2.ContextMenuStrip.Items.IndexOf(e.ClickedItem);
             if (k >= 0)
             {
-                toupcam2_.Snap((uint) k);
+                toupcam2_.Snap((uint)k);
             }
         }
 
@@ -499,8 +499,8 @@ namespace MVcamview
             {
                 if (toupcam1_.get_ExpTimeRange(out nMin, out nMax, out nDef))
                 {
-                    ExpoValue1.Minimum = (int) nMin;
-                    ExpoValue1.Maximum = (int) nMax;
+                    ExpoValue1.Minimum = (int)nMin;
+                    ExpoValue1.Maximum = (int)nMax;
                 }
 
                 OnEventExposure1();
@@ -547,8 +547,8 @@ namespace MVcamview
             {
                 if (toupcam2_.get_ExpTimeRange(out nMin, out nMax, out nDef))
                 {
-                    ExpoValue2.Minimum = (int) nMin;
-                    ExpoValue2.Maximum = (int) nMax;
+                    ExpoValue2.Minimum = (int)nMin;
+                    ExpoValue2.Maximum = (int)nMax;
                 }
 
                 OnEventExposure2();
@@ -596,11 +596,20 @@ namespace MVcamview
             if (toupcam1_ == null) return;
             if (toupcam1_.StillResolutionNumber <= 0)
             {
-                bmp1_?.Save("Camera1.jpg");
+
+                if (bmp1_ != null)
+                {
+                    bmp1_.Save("Camera2.jpg");
+                }
+
             }
             else
             {
-                CaptureCamera1.ContextMenuStrip?.Show(Cursor.Position);
+                if (CaptureCamera1.ContextMenuStrip != null)
+                {
+                    CaptureCamera1.ContextMenuStrip.Show(Cursor.Position);
+                }
+
             }
         }
 
@@ -609,18 +618,24 @@ namespace MVcamview
             if (toupcam2_ == null) return;
             if (toupcam2_.StillResolutionNumber <= 0)
             {
-                bmp2_?.Save("Camera2.jpg");
+                if (bmp2_ != null)
+                    bmp2_.Save("Camera2.jpg");
             }
             else
             {
-                CaptureCamera2.ContextMenuStrip?.Show(Cursor.Position);
+
+                if (CaptureCamera2.ContextMenuStrip != null)
+                {
+                    CaptureCamera2.ContextMenuStrip.Show(Cursor.Position);
+                }
+
             }
         }
 
         private void OnSnap3(object sender, EventArgs e)
         {
             if (_imageFilter.Result == null) return;
-            Bitmap resultBmp = (Bitmap) _imageFilter.Result;
+            Bitmap resultBmp = (Bitmap)_imageFilter.Result;
             resultBmp.Save("Combo.jpg");
         }
 
@@ -650,7 +665,7 @@ namespace MVcamview
                     CaptureCamera1.ContextMenuStrip = null;
 
                     toupcam1_.Stop();
-                    toupcam1_.put_eSize((uint) ResoulationList1.SelectedIndex);
+                    toupcam1_.put_eSize((uint)ResoulationList1.SelectedIndex);
 
                     InitSnapContextMenuAndExpoTimeRange();
                     OnEventTempTint();
@@ -676,7 +691,7 @@ namespace MVcamview
                     CaptureCamera2.ContextMenuStrip = null;
 
                     toupcam2_.Stop();
-                    toupcam2_.put_eSize((uint) ResoulationList1.SelectedIndex);
+                    toupcam2_.put_eSize((uint)ResoulationList1.SelectedIndex);
 
                     InitSnapContextMenuAndExpoTimeRange();
                     OnEventTempTint2();
@@ -692,16 +707,24 @@ namespace MVcamview
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
-            //exposure value1
+        //exposure value1
         {
-            toupcam1_?.put_AutoExpoEnable(AutoExposure1.Checked);
+            if (toupcam1_ != null)
+            {
+                toupcam1_.put_AutoExpoEnable(AutoExposure1.Checked);
+            }
+
             ExpoValue1.Enabled = !AutoExposure1.Checked;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
-            //exposure value2
+        //exposure value2
         {
-            toupcam2_?.put_AutoExpoEnable(AutoExposure1.Checked);
+            if (toupcam2_ != null)
+            {
+                toupcam2_.put_AutoExpoEnable(AutoExposure2.Checked);
+            }
+
             ExpoValue2.Enabled = !AutoExposure2.Checked;
         }
 
@@ -710,15 +733,15 @@ namespace MVcamview
             if (toupcam1_ == null) return;
             uint n = uint.Parse(ExpoValue1.Text);
             toupcam1_.put_ExpoTime(n);
-            label1.Text = (n/1000) + @" ms";
+            label1.Text = (n / 1000) + @" ms";
         }
 
         private void OnExpoValueChange2(object sender, EventArgs e)
         {
             if (toupcam2_ == null) return;
-            uint n = (uint) ExpoValue2.Value;
+            uint n = (uint)ExpoValue2.Value;
             toupcam2_.put_ExpoTime(n);
-            label4.Text = (n/1000) + @" ms";
+            label4.Text = (n / 1000) + @" ms";
         }
 
         private void Form_SizeChanged(object sender, EventArgs e)
@@ -749,19 +772,38 @@ namespace MVcamview
             }
         }
 
-        private void OnWhiteBalanceOnePush(object sender, EventArgs e)
+        private void OnWhiteBalanceOnePush1(object sender, EventArgs e)
         {
-            toupcam1_?.AwbOnePush(null);
+            if (toupcam1_ != null)
+            {
+                toupcam1_.AwbOnePush(null);
+            }
         }
 
-        private void OnTempTintChanged(object sender, EventArgs e)
+        private void OnWhiteBalanceOnePush2(object sender, EventArgs e)
         {
-            toupcam1_?.put_TempTint((int) TempValue1.Value, (int) TintValue1.Value);
+            if (toupcam2_ != null)
+            {
+                toupcam2_.AwbOnePush(null);
+            }
+        }
+
+        private void OnTempTintChanged1(object sender, EventArgs e)
+        {
+            if (toupcam1_ != null)
+            {
+                toupcam1_.put_TempTint((int)TempValue1.Value, (int)TintValue1.Value);
+            }
+
         }
 
         private void OnTempTintChanged2(object sender, EventArgs e)
         {
-            toupcam1_?.put_TempTint((int) TempValue2.Value, (int) TintValue2.Value);
+            if (toupcam2_ != null)
+            {
+                toupcam2_.put_TempTint((int)TempValue2.Value, (int)TintValue2.Value);
+            }
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -770,13 +812,13 @@ namespace MVcamview
 
         private void tbOpacityImage1_Scroll(object sender, EventArgs e)
         {
-            image1Opacity = (int) OpacityImage1.Value;
+            image1Opacity = (int)OpacityImage1.Value;
             lOpacityImage1.Text = @"Opacity - " + image1Opacity + @"%";
         }
 
         private void tbOpacityImage2_Scroll(object sender, EventArgs e)
         {
-            image2Opacity = (int) OpacityImage2.Value;
+            image2Opacity = (int)OpacityImage2.Value;
             lOpacityImage2.Text = @"Opacity - " + image2Opacity + @"%";
         }
 
@@ -794,7 +836,7 @@ namespace MVcamview
 
         private void cbRightLIne_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox) sender;
+            CheckBox cb = (CheckBox)sender;
             if (cb.Checked)
             {
                 int rightLineCalculated = 0;
@@ -813,7 +855,7 @@ namespace MVcamview
 
         private void ckbLeftLine_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox) sender;
+            CheckBox cb = (CheckBox)sender;
             if (cb.Checked)
             {
                 int leftLineCalculated = int.Parse(RightLineValue.Text ?? "" + 0);
@@ -828,7 +870,7 @@ namespace MVcamview
 
         private void FlipCamera1_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = (CheckBox) sender;
+            CheckBox cb = (CheckBox)sender;
 
             switch (cb.Text)
             {

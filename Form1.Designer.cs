@@ -236,7 +236,7 @@
             this.WhiteBalancePush1.TabIndex = 8;
             this.WhiteBalancePush1.Text = "White Balance One Push";
             this.WhiteBalancePush1.UseVisualStyleBackColor = true;
-            this.WhiteBalancePush1.Click += new System.EventHandler(this.OnWhiteBalanceOnePush);
+            this.WhiteBalancePush1.Click += new System.EventHandler(this.OnWhiteBalanceOnePush1);
             // 
             // Capture3
             // 
@@ -286,7 +286,7 @@
             this.WhiteBalancePush2.TabIndex = 8;
             this.WhiteBalancePush2.Text = "White Balance One Push";
             this.WhiteBalancePush2.UseVisualStyleBackColor = true;
-            this.WhiteBalancePush2.Click += new System.EventHandler(this.OnWhiteBalanceOnePush);
+            this.WhiteBalancePush2.Click += new System.EventHandler(this.OnWhiteBalanceOnePush2);
             // 
             // label1
             // 
@@ -693,7 +693,7 @@
             this.TempValue1.Name = "TempValue1";
             this.TempValue1.Size = new System.Drawing.Size(69, 20);
             this.TempValue1.TabIndex = 42;
-            this.TempValue1.ValueChanged += new System.EventHandler(this.OnTempTintChanged);
+            this.TempValue1.ValueChanged += new System.EventHandler(this.OnTempTintChanged1);
             // 
             // TintValue1
             // 
@@ -702,7 +702,7 @@
             this.TintValue1.Name = "TintValue1";
             this.TintValue1.Size = new System.Drawing.Size(69, 20);
             this.TintValue1.TabIndex = 43;
-            this.TintValue1.ValueChanged += new System.EventHandler(this.OnTempTintChanged);
+            this.TintValue1.ValueChanged += new System.EventHandler(this.OnTempTintChanged1);
             // 
             // TempValue2
             // 
@@ -716,6 +716,7 @@
             this.TempValue2.Name = "TempValue2";
             this.TempValue2.Size = new System.Drawing.Size(74, 20);
             this.TempValue2.TabIndex = 44;
+            this.TempValue2.ValueChanged += new System.EventHandler(this.OnTempTintChanged2);
             // 
             // TintValue2
             // 
