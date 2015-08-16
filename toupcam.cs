@@ -38,30 +38,30 @@ namespace ToupTek
         [Flags]
         public enum eFALG : uint
         {
-            FLAG_CMOS                 = 0x0001,   /* cmos sensor */
-            FLAG_CCD_PROGRESSIVE      = 0x0002,   /* progressive ccd sensor */
-            FLAG_CCD_INTERLACED       = 0x0004,   /* interlaced ccd sensor */
-            FLAG_MONO                 = 0x0010,   /* monochromatic */
-            FLAG_BINSKIP_SUPPORTED    = 0x0020,   /* support bin/skip mode */
-            FLAG_USB30                = 0x0040,   /* USB 3.0 */
-            FLAG_COOLED               = 0x0080,   /* Cooled */
-            FLAG_USB30_OVER_USB20     = 0x0100,   /* usb3.0 camera connected to usb2.0 port */
-            FLAG_ST4                  = 0x0200,   /* ST4 */
-            FLAG_AD10                 = 0x1000,   /* 10 bits A/D */
-            FLAG_AD12                 = 0x2000,   /* 12 bits A/D */
-            FLAG_AD14                 = 0x4000,   /* 14 bits A/D */
-            FLAG_AD16                 = 0x8000    /* 16 bits A/D */
+            FLAG_CMOS = 0x0001,   /* cmos sensor */
+            FLAG_CCD_PROGRESSIVE = 0x0002,   /* progressive ccd sensor */
+            FLAG_CCD_INTERLACED = 0x0004,   /* interlaced ccd sensor */
+            FLAG_MONO = 0x0010,   /* monochromatic */
+            FLAG_BINSKIP_SUPPORTED = 0x0020,   /* support bin/skip mode */
+            FLAG_USB30 = 0x0040,   /* USB 3.0 */
+            FLAG_COOLED = 0x0080,   /* Cooled */
+            FLAG_USB30_OVER_USB20 = 0x0100,   /* usb3.0 camera connected to usb2.0 port */
+            FLAG_ST4 = 0x0200,   /* ST4 */
+            FLAG_AD10 = 0x1000,   /* 10 bits A/D */
+            FLAG_AD12 = 0x2000,   /* 12 bits A/D */
+            FLAG_AD14 = 0x4000,   /* 14 bits A/D */
+            FLAG_AD16 = 0x8000    /* 16 bits A/D */
         };
-        
+
         public enum eEVENT : uint
         {
-            EVENT_EXPOSURE             = 0x0001, /* exposure time changed */
-            EVENT_TEMPTINT             = 0x0002, /* white balance changed */
-            EVENT_CHROME               = 0x0003, /* reversed, do not use it */
-            EVENT_IMAGE                = 0x0004, /* live image arrived, use Toupcam_PullImage to get this image */
-            EVENT_STILLIMAGE           = 0x0005, /* snap (still) frame arrived, use Toupcam_PullStillImage to get this frame */
-            EVENT_ERROR                = 0x0080, /* something error happens */
-            EVENT_DISCONNECTED         = 0x0081  /* camera disconnected */
+            EVENT_EXPOSURE = 0x0001, /* exposure time changed */
+            EVENT_TEMPTINT = 0x0002, /* white balance changed */
+            EVENT_CHROME = 0x0003, /* reversed, do not use it */
+            EVENT_IMAGE = 0x0004, /* live image arrived, use Toupcam_PullImage to get this image */
+            EVENT_STILLIMAGE = 0x0005, /* snap (still) frame arrived, use Toupcam_PullStillImage to get this frame */
+            EVENT_ERROR = 0x0080, /* something error happens */
+            EVENT_DISCONNECTED = 0x0081  /* camera disconnected */
         };
 
         public enum ePROCESSMODE : uint
@@ -74,33 +74,33 @@ namespace ToupTek
         {
             OPTION_NOFRAME_TIMEOUT = 0x01,    /* iValue: 1 = enable; 0 = disable. default: enable */
             OPTION_THREAD_PRIORITY = 0x02,    /* set the priority of the internal thread which grab data from the usb device. iValue: 0 = THREAD_PRIORITY_NORMAL; 1 = THREAD_PRIORITY_ABOVE_NORMAL; 2 = THREAD_PRIORITY_HIGHEST; default: 0; see: msdn SetThreadPriority */
-            OPTION_PROCESSMODE     = 0x03,    /* 0 = better image quality, more cpu usage. this is the default value
+            OPTION_PROCESSMODE = 0x03,    /* 0 = better image quality, more cpu usage. this is the default value
                                                  1 = lower image quality, less cpu usage */
-            OPTION_RAW             = 0x04,    /* raw mode, read the sensor data. This can be set only BEFORE Toupcam_StartXXX() */
-            OPTION_HISTOGRAM       = 0x05     /* 0 = only one, 1 = continue mode */
+            OPTION_RAW = 0x04,    /* raw mode, read the sensor data. This can be set only BEFORE Toupcam_StartXXX() */
+            OPTION_HISTOGRAM = 0x05     /* 0 = only one, 1 = continue mode */
         };
 
         [StructLayout(LayoutKind.Sequential)]
         public struct BITMAPINFOHEADER
         {
-            public uint     biSize;
-            public int      biWidth;
-            public int      biHeight;
-            public ushort   biPlanes;
-            public ushort   biBitCount;
-            public uint     biCompression;
-            public uint     biSizeImage;
-            public int      biXPelsPerMeter;
-            public int      biYPelsPerMeter;
-            public uint     biClrUsed;
-            public uint     biClrImportant;
+            public uint biSize;
+            public int biWidth;
+            public int biHeight;
+            public ushort biPlanes;
+            public ushort biBitCount;
+            public uint biCompression;
+            public uint biSizeImage;
+            public int biXPelsPerMeter;
+            public int biYPelsPerMeter;
+            public uint biClrUsed;
+            public uint biClrImportant;
 
             public void Init()
             {
                 biSize = (uint)Marshal.SizeOf(this);
             }
         }
-        
+
         public struct Resolution
         {
             public uint width;
@@ -124,7 +124,7 @@ namespace ToupTek
 
         [DllImport("kernel32.dll", EntryPoint = "CopyMemory")]
         public static extern void CopyMemory(IntPtr Destination, IntPtr Source, uint Length);
-        
+
         public delegate void DelegateEventCallback(eEVENT nEvent);
         public delegate void DelegateDataCallback(IntPtr pData, ref BITMAPINFOHEADER header, bool bSnap);
         public delegate void DelegateExposureCallback();
@@ -144,7 +144,7 @@ namespace ToupTek
         internal delegate void PITOUPCAM_CHROME_CALLBACK(IntPtr pCtx);
         [UnmanagedFunctionPointerAttribute(CallingConvention.StdCall)]
         internal delegate void PTOUPCAM_EVENT_CALLBACK(eEVENT nEvent, IntPtr pCtx);
-        
+
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
         {
@@ -171,11 +171,11 @@ namespace ToupTek
         private static extern int Toupcam_Stop(SafeHToupCamHandle h);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_Pause(SafeHToupCamHandle h, int bPause);
-        
+
         /* for still image snap */
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_Snap(SafeHToupCamHandle h, uint nResolutionIndex);
-        
+
         /*
             put_Size, put_eSize, can be used to set the video output resolution BEFORE Start.
             put_Size use width and height parameters, put_eSize use the index parameter.
@@ -208,7 +208,7 @@ namespace ToupTek
         */
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern uint Toupcam_get_RawFormat(SafeHToupCamHandle h, out uint nFourCC, out uint bits);
-        
+
         /*
             set or get the process mode: TOUPCAM_PROCESSMODE_FULL or TOUPCAM_PROCESSMODE_FAST
         */
@@ -222,7 +222,7 @@ namespace ToupTek
         private static extern int Toupcam_get_RealTime(SafeHToupCamHandle h, out int bEnable);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_Flush(SafeHToupCamHandle h);
-        
+
         /*
             ------------------------------------------------------------|
             | Parameter         |   Range       |   Default             |
@@ -307,7 +307,7 @@ namespace ToupTek
         private static extern int Toupcam_get_Negative(SafeHToupCamHandle h, out int bNegative);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_put_Negative(SafeHToupCamHandle h, int bNegative);
-        
+
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_put_Speed(SafeHToupCamHandle h, ushort nSpeed);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
@@ -361,7 +361,7 @@ namespace ToupTek
         */
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_get_SerialNumber(SafeHToupCamHandle h, IntPtr sn);
-        
+
         /*
             get the camera firmware version, such as: 3.2.1.20140922
         */
@@ -372,7 +372,7 @@ namespace ToupTek
         */
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_get_HwVersion(SafeHToupCamHandle h, IntPtr hwver);
-        
+
         /*
                     ------------------------------------------------------------|
                     | Parameter         |   Range       |   Default             |
@@ -404,20 +404,20 @@ namespace ToupTek
         private static extern int Toupcam_LevelRangeAuto(SafeHToupCamHandle h);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_GetHistogram(SafeHToupCamHandle h, PITOUPCAM_HISTOGRAM_CALLBACK fnHistogramProc, IntPtr pHistogramCtx);
-        
+
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_put_LEDState(SafeHToupCamHandle h, ushort iLed, ushort iState, ushort iPeriod);
-        
+
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_write_EEPROM(SafeHToupCamHandle h, uint addr, IntPtr pData, uint nDataLen);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_read_EEPROM(SafeHToupCamHandle h, uint addr, IntPtr pBuffer, uint nBufferLen);
-        
+
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_put_Option(SafeHToupCamHandle h, eOPTION iOption, uint iValue);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_get_Option(SafeHToupCamHandle h, eOPTION iOption, out uint iValue);
-        
+
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int Toupcam_TempTint2RGB(int nTemp, int nTint, [Out] int[] nRGB);
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
@@ -425,21 +425,21 @@ namespace ToupTek
 
         [DllImport("toupcam.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern double Toupcam_calc_ClarityFactor(IntPtr pImageData, int bits, uint nImgWidth, uint nImgHeight);
-        
-        private SafeHToupCamHandle      _handle;
-        private GCHandle                _gchandle;
-        private DelegateDataCallback    _dDataCallback;
-        private DelegateEventCallback   _dEventCallback;
-        private DelegateExposureCallback        _dExposureCallback;
-        private DelegateTempTintCallback        _dTempTintCallback;
-        private DelegateHistogramCallback       _dHistogramCallback;
-        private DelegateChromeCallback          _dChromeCallback;
-        private PTOUPCAM_DATA_CALLBACK          _pDataCallback;
-        private PTOUPCAM_EVENT_CALLBACK         _pEventCallback;
-        private PITOUPCAM_EXPOSURE_CALLBACK     _pExposureCallback;
-        private PITOUPCAM_TEMPTINT_CALLBACK     _pTempTintCallback;
-        private PITOUPCAM_HISTOGRAM_CALLBACK    _pHistogramCallback;
-        private PITOUPCAM_CHROME_CALLBACK       _pChromeCallback;
+
+        private SafeHToupCamHandle _handle;
+        private GCHandle _gchandle;
+        private DelegateDataCallback _dDataCallback;
+        private DelegateEventCallback _dEventCallback;
+        private DelegateExposureCallback _dExposureCallback;
+        private DelegateTempTintCallback _dTempTintCallback;
+        private DelegateHistogramCallback _dHistogramCallback;
+        private DelegateChromeCallback _dChromeCallback;
+        private PTOUPCAM_DATA_CALLBACK _pDataCallback;
+        private PTOUPCAM_EVENT_CALLBACK _pEventCallback;
+        private PITOUPCAM_EXPOSURE_CALLBACK _pExposureCallback;
+        private PITOUPCAM_TEMPTINT_CALLBACK _pTempTintCallback;
+        private PITOUPCAM_HISTOGRAM_CALLBACK _pHistogramCallback;
+        private PITOUPCAM_CHROME_CALLBACK _pChromeCallback;
 
         private void EventCallback(eEVENT nEvent)
         {
@@ -515,7 +515,9 @@ namespace ToupTek
             {
                 ToupCam pthis = gch.Target as ToupCam;
                 if (pthis != null)
+                {
                     pthis.EventCallback(nEvent);
+                }
             }
         }
 
@@ -524,7 +526,10 @@ namespace ToupTek
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                pthis?.ExposureCallback();
+                if (pthis != null)
+                {
+                    pthis.ExposureCallback();
+                }
             }
         }
 
@@ -533,7 +538,10 @@ namespace ToupTek
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                pthis?.TempTintCallback(nTemp, nTint);
+                if (pthis != null)
+                {
+                    pthis.TempTintCallback(nTemp, nTint);
+                }
             }
         }
 
@@ -601,12 +609,12 @@ namespace ToupTek
         {
             Dispose();
         }
-        
+
         public static string Version()
         {
             return Marshal.PtrToStringUni(Toupcam_Version());
         }
-        
+
         /* enumerate ToupCam cameras that are currently connected to computer */
         public static Instance[] Enum()
         {
@@ -655,7 +663,7 @@ namespace ToupTek
             Marshal.FreeHGlobal(ti);
             return arr;
         }
-        
+
         // id: enumerated by Enum
         public bool Open(string id)
         {
@@ -753,7 +761,7 @@ namespace ToupTek
                 return fwver;
             }
         }
-        
+
         /* get the camera hardware version, such as: 3.2.1.20140922 */
         public string HwVersion
         {
@@ -772,7 +780,7 @@ namespace ToupTek
                 return hwver;
             }
         }
-                
+
         public bool StartPullModeWithWndMsg(IntPtr hWnd, uint nMsg)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
@@ -780,7 +788,7 @@ namespace ToupTek
 
             return (Toupcam_StartPullModeWithWndMsg(_handle, hWnd, nMsg) >= 0);
         }
-        
+
         public bool StartPullModeWithCallback(DelegateEventCallback edelegate)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
@@ -797,7 +805,7 @@ namespace ToupTek
                 return (Toupcam_StartPullModeWithCallback(_handle, null, IntPtr.Zero) >= 0);
             }
         }
-        
+
         /*  bits: 24 (RGB24), 32 (RGB32), or 8 (Grey) */
         public bool PullImage(IntPtr pImageData, int bits, out uint pnWidth, out uint pnHeight)
         {
@@ -809,7 +817,7 @@ namespace ToupTek
 
             return (Toupcam_PullImage(_handle, pImageData, bits, out pnWidth, out pnHeight) >= 0);
         }
-        
+
         /*  bits: 24 (RGB24), 32 (RGB32), or 8 (Grey) */
         public bool PullStillImage(IntPtr pImageData, int bits, out uint pnWidth, out uint pnHeight)
         {
@@ -821,7 +829,7 @@ namespace ToupTek
 
             return (Toupcam_PullStillImage(_handle, pImageData, bits, out pnWidth, out pnHeight) >= 0);
         }
-            
+
         public bool StartPushMode(DelegateDataCallback ddelegate)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
@@ -898,7 +906,7 @@ namespace ToupTek
                 return false;
             return (Toupcam_get_RawFormat(_handle, out nFourCC, out bits) >= 0);
         }
-        
+
         public bool put_ProcessMode(ePROCESSMODE nProcessMode)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
@@ -1186,7 +1194,7 @@ namespace ToupTek
                 return false;
             return (Toupcam_put_HFlip(_handle, bHFlip ? 1 : 0) >= 0);
         }
-        
+
         /* negative film */
         public bool get_Negative(out bool bNegative)
         {
@@ -1208,7 +1216,7 @@ namespace ToupTek
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
                 return false;
             return (Toupcam_put_Negative(_handle, bNegative ? 1 : 0) >= 0);
-        }        
+        }
 
         public bool put_Speed(ushort nSpeed)
         {
@@ -1394,7 +1402,7 @@ namespace ToupTek
                 return false;
             return (Toupcam_get_VignetMidPointInt(_handle, out nMidPoint) >= 0);
         }
-        
+
         /* led state:
             iLed: Led index, (0, 1, 2, ...)
             iState: 1 -> Ever bright; 2 -> Flashing; other -> Off
@@ -1406,14 +1414,14 @@ namespace ToupTek
                 return false;
             return (Toupcam_put_LEDState(_handle, iLed, iState, iPeriod) >= 0);
         }
-        
+
         public int write_EEPROM(SafeHToupCamHandle h, uint addr, IntPtr pData, uint nDataLen)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
                 return 0;
             return Toupcam_write_EEPROM(_handle, addr, pData, nDataLen);
         }
-        
+
         public int read_EEPROM(SafeHToupCamHandle h, uint addr, IntPtr pBuffer, uint nBufferLen)
         {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
@@ -1487,7 +1495,7 @@ namespace ToupTek
                 return (Toupcam_AwbOnePush(_handle, _pTempTintCallback, GCHandle.ToIntPtr(_gchandle)) >= 0);
             }
         }
-        
+
         /* put_TempTintInit is obsolete, it's a synonyms for AwbOnePush. They are exactly the same */
         public bool put_TempTintInit(DelegateTempTintCallback fnTTProc)
         {
@@ -1503,12 +1511,12 @@ namespace ToupTek
             _pHistogramCallback = new PITOUPCAM_HISTOGRAM_CALLBACK(HistogramCallback);
             return (Toupcam_GetHistogram(_handle, _pHistogramCallback, GCHandle.ToIntPtr(_gchandle)) >= 0);
         }
-        
+
         public static void TempTint2RGB(int nTemp, int nTint, int[] nRGB)
         {
             Toupcam_TempTint2RGB(nTemp, nTint, nRGB);
         }
-        
+
         public static void RGB2TempTint(int[] nRGB, out int nTemp, out int nTint)
         {
             Toupcam_RGB2TempTint(nRGB, out nTemp, out nTint);
