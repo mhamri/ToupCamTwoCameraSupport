@@ -882,7 +882,7 @@ namespace MVcamview
             CheckBox cb = (CheckBox)sender;
             if (cb.Checked)
             {
-                int leftLineCalculated = int.Parse(RightLineValue.Text ?? "" + 0);
+                int leftLineCalculated = int.Parse(LeftLineValue.Text ?? "" + 0);
 
                 _imageFilter.LeftLine = leftLineCalculated;
             }
