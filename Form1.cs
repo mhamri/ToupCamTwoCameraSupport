@@ -33,6 +33,9 @@ namespace MVcamview
         private ToupCam toupcam1_;
         private ToupCam toupcam2_;
 
+        private Bitmap bmp1BackUp;
+        private Bitmap bmp2BackUp;
+
         public Form1()
         {
             InitializeComponent();
@@ -65,6 +68,8 @@ namespace MVcamview
                 toupcam2_ = null;
             }
             MessageBox.Show(@"Error");
+            //TODO:make it retry
+            OnStart(null, null);
         }
 
         private void OnEventDisconnected()
@@ -154,12 +159,14 @@ namespace MVcamview
             }
 
 
-            if (!IsRunning)
+            if (!IsRunning && bmp1_!=null && bmp2_!=null)
             {
                 BackgroundWorker bg = new BackgroundWorker();
                 bg.DoWork += Bg_ChangeOpcity;
                 bg.RunWorkerCompleted += Bg_ChangeOpacityFinished;
                 IsRunning = true;
+                bmp1BackUp = (Bitmap) bmp1_.Clone();
+                bmp2BackUp = (Bitmap) bmp2_.Clone();
                 bg.RunWorkerAsync();
             }
         }
@@ -167,14 +174,12 @@ namespace MVcamview
         private void Bg_ChangeOpacityFinished(object sender, RunWorkerCompletedEventArgs e)
         {
             pictureBox3.Image = _imageFilter.Result;
-
-            //draw lines
             IsRunning = false;
         }
 
         private void Bg_ChangeOpcity(object sender, DoWorkEventArgs e)
         {
-            if (bmp1_ == null || bmp2_ == null) return;
+            if (bmp1BackUp == null || bmp2BackUp== null) return;
 
             Image topImage;
             Image bottomImage;
@@ -183,16 +188,16 @@ namespace MVcamview
 
             if (!imageOneOnTop)
             {
-                topImage = (Image)bmp1_.Clone();
+                topImage = (Image)bmp1BackUp.Clone();
                 topImageOpacity = image1Opacity / 100;
-                bottomImage = (Image)bmp2_.Clone();
+                bottomImage = (Image)bmp2BackUp.Clone();
                 bottomImageOpacity = image2Opacity / 100;
             }
             else
             {
-                topImage = (Image)bmp2_.Clone();
+                topImage = (Image)bmp2BackUp.Clone();
                 topImageOpacity = image2Opacity / 100;
-                bottomImage = (Image)bmp1_.Clone();
+                bottomImage = (Image)bmp1BackUp.Clone();
                 bottomImageOpacity = image1Opacity / 100;
             }
 
@@ -261,9 +266,7 @@ namespace MVcamview
             CaptureCamera2.Enabled = false;
 
             /* combined Picture */
-            _imageFilter = new ImageFilter();
-            image1Opacity = 100;
-            image2Opacity = 100;
+            
             pictureBox3.BackColor = Color.White;
             LeftLineValue.Enabled = false;
             ShowLeftLine.Enabled = false;
@@ -467,8 +470,14 @@ namespace MVcamview
                 if (toupcam1_ != null && toupcam2_ != null)
                 {
                     //opacity is avaliable only if both camera is connected
+                    _imageFilter = new ImageFilter();
+                    image1Opacity = 100;
+                    image2Opacity = 100;
+                    IsRunning = false;
                     OpacityImage1.Enabled = true;
+                    OpacityImage1.Value = (decimal)image1Opacity;
                     OpacityImage2.Enabled = true;
+                    OpacityImage2.Value = (decimal)image2Opacity;
                     Capture3.Enabled = true;
                 }
             }
@@ -825,6 +834,7 @@ namespace MVcamview
         private void SelectImage1OnTop_CheckedChanged(object sender, EventArgs e)
         {
             SelectImage2OnTop.Checked = false;
+            
             imageOneOnTop = true;
         }
 

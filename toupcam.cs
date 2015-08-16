@@ -550,7 +550,11 @@ namespace ToupTek
             GCHandle gch = GCHandle.FromIntPtr(pCallbackCtx);
             {
                 ToupCam pthis = gch.Target as ToupCam;
-                pthis?.ChromeCallback();
+                if (pthis != null)
+                {
+                pthis.ChromeCallback();
+
+                }
             }
         }
 

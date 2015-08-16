@@ -316,7 +316,7 @@
             this.SelectImage1OnTop.TabStop = true;
             this.SelectImage1OnTop.Text = "Top";
             this.SelectImage1OnTop.UseVisualStyleBackColor = true;
-            this.SelectImage1OnTop.CheckedChanged += new System.EventHandler(this.SelectImage1OnTop_CheckedChanged);
+            this.SelectImage1OnTop.Click += new System.EventHandler(this.SelectImage1OnTop_CheckedChanged);
             // 
             // ShowRightLine
             // 
@@ -424,7 +424,7 @@
             this.SelectImage2OnTop.TabIndex = 1;
             this.SelectImage2OnTop.Text = "Top";
             this.SelectImage2OnTop.UseVisualStyleBackColor = true;
-            this.SelectImage2OnTop.CheckedChanged += new System.EventHandler(this.SelectImage2OnTop_CheckedChanged);
+            this.SelectImage2OnTop.Click += new System.EventHandler(this.SelectImage2OnTop_CheckedChanged);
             // 
             // CaptureCamera2
             // 
@@ -735,11 +735,6 @@
             // 
             this.OpacityImage1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.OpacityImage1.Location = new System.Drawing.Point(78, 493);
-            this.OpacityImage1.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.OpacityImage1.Name = "OpacityImage1";
             this.OpacityImage1.Size = new System.Drawing.Size(69, 20);
             this.OpacityImage1.TabIndex = 45;
@@ -749,11 +744,6 @@
             // 
             this.OpacityImage2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.OpacityImage2.Location = new System.Drawing.Point(893, 493);
-            this.OpacityImage2.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.OpacityImage2.Name = "OpacityImage2";
             this.OpacityImage2.Size = new System.Drawing.Size(74, 20);
             this.OpacityImage2.TabIndex = 46;
