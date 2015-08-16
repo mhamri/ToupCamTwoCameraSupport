@@ -754,7 +754,7 @@ namespace MVcamview
         private void OnExpoValueChange(object sender, EventArgs e)
         {
             if (toupcam1_ == null) return;
-            uint n = uint.Parse(ExpoValue1.Text);
+            uint n = (uint)ExpoValue1.Value;
             toupcam1_.put_ExpoTime(n);
             label1.Text = (n / 1000) + @" ms";
         }
@@ -762,7 +762,7 @@ namespace MVcamview
         private void OnExpoValueChange2(object sender, EventArgs e)
         {
             if (toupcam2_ == null) return;
-            uint n = uint.Parse(ExpoValue2.Text);
+            uint n = (uint)ExpoValue2.Value;
             toupcam2_.put_ExpoTime(n);
             label4.Text = (n / 1000) + @" ms";
         }
