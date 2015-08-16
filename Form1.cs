@@ -239,6 +239,11 @@ namespace MVcamview
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ResetUI();
+        }
+
+        private void ResetUI()
+        {
             /* camera 1 */
             SelectImage1OnTop.Enabled = false;
             ResoulationList1.Enabled = false;
@@ -266,7 +271,7 @@ namespace MVcamview
             CaptureCamera2.Enabled = false;
 
             /* combined Picture */
-            
+
             pictureBox3.BackColor = Color.White;
             LeftLineValue.Enabled = false;
             ShowLeftLine.Enabled = false;
@@ -305,7 +310,8 @@ namespace MVcamview
                         OnEventStillImage();
                         break;
                     case ToupCam.eEVENT.EVENT_TEMPTINT:
-                        OnEventTempTint();
+                        OnEventTempTint1();
+                        OnEventTempTint2();
                         break;
                 }
                 return;
@@ -371,14 +377,14 @@ namespace MVcamview
 
                     lOpacityImage1.Text = @"Opacity - 100%";
                     CaptureCamera1.ContextMenuStrip = null;
-                    InitSnapContextMenuAndExpoTimeRange();
+                    InitSnapContextMenuAndExpoTimeRange1();
 
                     TempValue1.Minimum = 2000;
                     TempValue1.Maximum = 15000;
 
                     TintValue1.Minimum = 200;
                     TintValue1.Maximum = 2500;
-                    OnEventTempTint();
+                    OnEventTempTint1();
 
                     uint resnum = toupcam1_.ResolutionNumber;
                     uint eSize = 0;
@@ -429,7 +435,7 @@ namespace MVcamview
 
                     lOpacityImage2.Text = @"Opacity - 100%";
                     CaptureCamera1.ContextMenuStrip = null;
-                    InitSnapContextMenuAndExpoTimeRange();
+                    InitSnapContextMenuAndExpoTimeRange2();
 
                     TempValue2.Minimum = 2000;
                     TempValue2.Maximum = 15000;
@@ -501,11 +507,12 @@ namespace MVcamview
             }
         }
 
-        private void InitSnapContextMenuAndExpoTimeRange()
+        private void InitSnapContextMenuAndExpoTimeRange1()
         {
-            uint nMin = 0, nMax = 0, nDef = 0;
             if (toupcam1_ != null)
             {
+                uint nMin = 0, nMax = 0, nDef = 0;
+
                 if (toupcam1_.get_ExpTimeRange(out nMin, out nMax, out nDef))
                 {
                     ExpoValue1.Minimum = (int)nMin;
@@ -550,10 +557,16 @@ namespace MVcamview
                     CaptureCamera1.ContextMenuStrip.Items.Add(sb.ToString());
                 }
             }
+            
+        }
 
+        private void InitSnapContextMenuAndExpoTimeRange2()
+        {
 
             if (toupcam2_ != null)
             {
+                uint nMin = 0, nMax = 0, nDef = 0;
+
                 if (toupcam2_.get_ExpTimeRange(out nMin, out nMax, out nDef))
                 {
                     ExpoValue2.Minimum = (int)nMin;
@@ -676,8 +689,8 @@ namespace MVcamview
                     toupcam1_.Stop();
                     toupcam1_.put_eSize((uint)ResoulationList1.SelectedIndex);
 
-                    InitSnapContextMenuAndExpoTimeRange();
-                    OnEventTempTint();
+                    InitSnapContextMenuAndExpoTimeRange1();
+                    OnEventTempTint1();
 
                     int width = 0, height = 0;
                     if (toupcam1_.get_Size(out width, out height))
@@ -702,7 +715,7 @@ namespace MVcamview
                     toupcam2_.Stop();
                     toupcam2_.put_eSize((uint)ResoulationList1.SelectedIndex);
 
-                    InitSnapContextMenuAndExpoTimeRange();
+                    InitSnapContextMenuAndExpoTimeRange2();
                     OnEventTempTint2();
 
                     int width = 0, height = 0;
@@ -716,7 +729,7 @@ namespace MVcamview
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        //exposure value1
+        //auto exposure for camera 1
         {
             if (toupcam1_ != null)
             {
@@ -727,7 +740,7 @@ namespace MVcamview
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        //exposure value2
+        //auto exposure for camera2
         {
             if (toupcam2_ != null)
             {
@@ -748,7 +761,7 @@ namespace MVcamview
         private void OnExpoValueChange2(object sender, EventArgs e)
         {
             if (toupcam2_ == null) return;
-            uint n = (uint)ExpoValue2.Value;
+            uint n = uint.Parse(ExpoValue2.Text);
             toupcam2_.put_ExpoTime(n);
             label4.Text = (n / 1000) + @" ms";
         }
@@ -759,7 +772,7 @@ namespace MVcamview
             //pictureBox1.Height = ClientRectangle.Height - 8;
         }
 
-        private void OnEventTempTint()
+        private void OnEventTempTint1()
         {
             if (toupcam1_ == null) return;
             int nTemp = 0, nTint = 0;

@@ -730,6 +730,7 @@
             this.TintValue2.Name = "TintValue2";
             this.TintValue2.Size = new System.Drawing.Size(74, 20);
             this.TintValue2.TabIndex = 44;
+            this.TintValue2.ValueChanged += new System.EventHandler(this.OnTempTintChanged2);
             // 
             // OpacityImage1
             // 
